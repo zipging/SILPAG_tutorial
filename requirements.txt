@@ -1,0 +1,6 @@
+sphinx
+nbsphinx
+sphinx-rtd-theme
+ipython
+# pandas 
+# scanpy
