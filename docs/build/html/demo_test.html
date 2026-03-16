@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>train &mdash; SILPAG v1 documentation</title>
+  <title>🚀 Getting Started with SILPAG &mdash; SILPAG v1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=2aa19091" />
@@ -51,7 +51,20 @@
 <li class="toctree-l1"><a class="reference internal" href="Assignment_1_notebook.html">MDS5202 Assignment 1 (Python notebook)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Assignment_1_notebook.html#Applied-Question-8:-College-data-(Python)">Applied Question 8: College data (Python)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Assignment_1_notebook.html#Applied-Question-10:-Boston-housing-(Python)">Applied Question 10: Boston housing (Python)</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">train</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">🚀 Getting Started with SILPAG</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#📦-Installation">📦 Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#OpenCV">OpenCV</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#📥-Download-Demo-Data">📥 Download Demo Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#⚡-Quick-Start">⚡ Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#1.-Load-&amp;-preprocess-data">1. Load &amp; preprocess data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#2.Configure-&amp;-train">2.Configure &amp; train</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#3.-Generate-view-tranferred-gene-expression">3. Generate view-tranferred gene expression</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -68,7 +81,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">train</li>
+      <li class="breadcrumb-item active">🚀 Getting Started with SILPAG</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/demo_test.ipynb.txt" rel="nofollow"> View page source</a>
       </li>
@@ -78,8 +91,19 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+  <section id="🚀-Getting-Started-with-SILPAG">
+<h1>🚀 Getting Started with SILPAG<a class="headerlink" href="#🚀-Getting-Started-with-SILPAG" title="Link to this heading"></a></h1>
+<p>SILPAG (<strong>S</strong>patial <strong>I</strong>nter-slice <strong>L</strong>inking via <strong>P</strong>atch-level <strong>A</strong>nchor <strong>G</strong>ene-guided Optimal Transport) is a framework for cross-slice spatial transcriptomics alignment and gene expression analysis. It learns shared representations across tissue slices using vector-quantized embeddings and anchor-gene-guided optimal transport.</p>
+<section id="📦-Installation">
+<h2>📦 Installation<a class="headerlink" href="#📦-Installation" title="Link to this heading"></a></h2>
+<p>```bash # Core dependencies pip install scanpy anndata torch torchvision numpy pandas scipy scikit-learn pip install gseapy seaborn matplotlib tqdm numba entmax scikit-image</p>
+</section>
+</section>
+<section id="OpenCV">
+<h1>OpenCV<a class="headerlink" href="#OpenCV" title="Link to this heading"></a></h1>
+<p>pip install opencv-python</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
@@ -101,11 +125,48 @@
 <span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;font.family&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Arial&#39;</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">SILPAG</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<br/></pre></div>
+</div>
+</div>
+<section id="📥-Download-Demo-Data">
+<h2>📥 Download Demo Data<a class="headerlink" href="#📥-Download-Demo-Data" title="Link to this heading"></a></h2>
+<p>This tutorial uses two 10x Visium spatial transcriptomics samples:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Sample</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>File</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>hNB-V02</strong></p></td>
+<td><p>Human normal breast tissue</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">V02_nb.h5ad</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>hBC-H1</strong></p></td>
+<td><p>Human breast cancer tissue</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">H1_nb.h5ad</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Download link:</strong> <a class="reference external" href="https://cuhko365-my.sharepoint.com/:f:/g/personal/225040459_link_cuhk_edu_cn/IgB8oVwMOxjRTZndM5LLiexwASgi3ts3kse0_dRJZ9SLnzc?e=pwTcxQ">OneDrive – Demo Data</a></p>
+<p>After downloading, place the files in the <code class="docutils literal notranslate"><span class="pre">data/</span></code> directory:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>SILPAG/
+├── __init__.py
+├── main.py
+├── model.py
+├── agot.py          # Anchor-Gene-guided Optimal Transport
+├── util.py
+└── data/
+    ├── V02_nb.h5ad  # normal breast (reference)
+    └── H1_nb.h5ad   # breast cancer (query)
 </pre></div>
 </div>
-</div>
-<section id="train">
-<h1>train<a class="headerlink" href="#train" title="Link to this heading"></a></h1>
+</section>
+<section id="⚡-Quick-Start">
+<h2>⚡ Quick Start<a class="headerlink" href="#⚡-Quick-Start" title="Link to this heading"></a></h2>
+<section id="1.-Load-&amp;-preprocess-data">
+<h3>1. Load &amp; preprocess data<a class="headerlink" href="#1.-Load-&-preprocess-data" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
@@ -148,6 +209,9 @@
 (1896, 7874) (613, 7874)
 </pre></div></div>
 </div>
+</section>
+<section id="2.Configure-&amp;-train">
+<h3>2.Configure &amp; train<a class="headerlink" href="#2.Configure-&-train" title="Link to this heading"></a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
@@ -444,6 +508,9 @@ Training: 100%|██████████| 200/200 [1:01:12&lt;00:00, 18.36s
 Number of Anchor gene: 2382
 </pre></div></div>
 </div>
+</section>
+<section id="3.-Generate-view-tranferred-gene-expression">
+<h3>3. Generate view-tranferred gene expression<a class="headerlink" href="#3.-Generate-view-tranferred-gene-expression" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -462,6 +529,8 @@ Generating...: 100%|██████████| 7874/7874 [00:08&lt;00:00, 9
 Generating...: 100%|██████████| 7874/7874 [00:08&lt;00:00, 966.43gene/s]
 </pre></div></div>
 </div>
+</section>
+</section>
 </section>
 
 

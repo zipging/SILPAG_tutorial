@@ -1,9 +1,29 @@
 {
  "cells": [
   {
-   "cell_type": "code",
-   "execution_count": 13,
+   "cell_type": "markdown",
    "id": "bb8ebdf2",
+   "metadata": {},
+   "source": [
+    "# 🚀 Getting Started with SILPAG\n",
+    "\n",
+    "SILPAG (**S**patial **I**nter-slice **L**inking via **P**atch-level **A**nchor **G**ene-guided Optimal Transport) is a framework for cross-slice spatial transcriptomics alignment and gene expression analysis. It learns shared representations across tissue slices using vector-quantized embeddings and anchor-gene-guided optimal transport.\n",
+    "\n",
+    "## 📦 Installation\n",
+    "\n",
+    "```bash\n",
+    "# Core dependencies\n",
+    "pip install scanpy anndata torch torchvision numpy pandas scipy scikit-learn\n",
+    "pip install gseapy seaborn matplotlib tqdm numba entmax scikit-image\n",
+    "\n",
+    "# OpenCV\n",
+    "pip install opencv-python\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6d719e9f",
    "metadata": {},
    "outputs": [],
    "source": [
@@ -25,7 +45,48 @@
     "import matplotlib\n",
     "matplotlib.rcParams['font.family'] = 'Arial'\n",
     "\n",
-    "import SILPAG as sp"
+    "import SILPAG as sp\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7ebf0aef",
+   "metadata": {},
+   "source": [
+    "## 📥 Download Demo Data\n",
+    "\n",
+    "This tutorial uses two 10x Visium spatial transcriptomics samples:\n",
+    "\n",
+    "| Sample | Description | File |\n",
+    "|--------|-------------|------|\n",
+    "| **hNB-V02** | Human normal breast tissue | `V02_nb.h5ad` |\n",
+    "| **hBC-H1** | Human breast cancer tissue | `H1_nb.h5ad` |\n",
+    "\n",
+    "**Download link:** [OneDrive – Demo Data](https://cuhko365-my.sharepoint.com/:f:/g/personal/225040459_link_cuhk_edu_cn/IgB8oVwMOxjRTZndM5LLiexwASgi3ts3kse0_dRJZ9SLnzc?e=pwTcxQ)\n",
+    "\n",
+    "After downloading, place the files in the `data/` directory:\n",
+    "\n",
+    "\n",
+    "```\n",
+    "SILPAG/\n",
+    "├── __init__.py\n",
+    "├── main.py\n",
+    "├── model.py\n",
+    "├── agot.py          # Anchor-Gene-guided Optimal Transport\n",
+    "├── util.py\n",
+    "└── data/\n",
+    "    ├── V02_nb.h5ad  # normal breast (reference)\n",
+    "    └── H1_nb.h5ad   # breast cancer (query)\n",
+    "```\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7dd91abf",
+   "metadata": {},
+   "source": [
+    "## ⚡ Quick Start"
    ]
   },
   {
@@ -33,7 +94,7 @@
    "id": "bf297743",
    "metadata": {},
    "source": [
-    "## train"
+    "### 1. Load & preprocess data"
    ]
   },
   {
@@ -78,6 +139,14 @@
     "labels[np.where(ref.var['hkgene'] == 1)[0]] = 1\n",
     "print(ref.shape, adata.shape)\n",
     "del ref.raw"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b9847795",
+   "metadata": {},
+   "source": [
+    "### 2.Configure & train"
    ]
   },
   {
@@ -354,6 +423,14 @@
     "code = sp.get_code(model, dataset, hist_data=None, pi_init=PI, source_idx=0, target_idx=1, args=args)\n",
     "adata.varm['code_ref'] = code[0]\n",
     "adata.varm['code_tgt'] = code[1]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "24224ed8",
+   "metadata": {},
+   "source": [
+    "### 3. Generate view-tranferred gene expression"
    ]
   },
   {
