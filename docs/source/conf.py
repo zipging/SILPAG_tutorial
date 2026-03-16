@@ -29,3 +29,6 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+# Hide cell execution prompt (In [1]: / Out [1]:)
+nbsphinx_prompt_width = '0'
