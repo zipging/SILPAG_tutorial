@@ -1,0 +1,1262 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Downstream Analysis: CRG Identification, Alteration Type Disentanglement &amp; CRR Delineation &mdash; SILPAG v1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css?v=a35ea3b2" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=5cb08e4e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Getting Started with SILPAG" href="demo_test.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            SILPAG
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="demo_test.html">Getting Started with SILPAG</a></li>
+<li class="toctree-l1"><a class="reference internal" href="demo_test.html#test">test</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Downstream Analysis: CRG Identification, Alteration Type Disentanglement &amp; CRR Delineation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#0.-Setup">0. Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#1.-Load-Data-&amp;-Preprocessing">1. Load Data &amp; Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#2.-Load-Trained-Model-&amp;-Generate-View-Transferred-SGMs">2. Load Trained Model &amp; Generate View-Transferred SGMs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Task-1:-CRG-Identification">Task 1: CRG Identification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Store-CRG-Results-in-AnnData">Store CRG Results in AnnData</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Task-2:-Alteration-Type-Disentanglement">Task 2: Alteration Type Disentanglement</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Detailed-Results-Table">Detailed Results Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Example-CRG-Visualisation">Example CRG Visualisation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Task-3:-CRR-Delineation">Task 3: CRR Delineation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Marker-based-CRR-Delineation">Marker-based CRR Delineation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Store-CRR-Results">Store CRR Results</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#Save-All-Results">Save All Results</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SILPAG</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Downstream Analysis: CRG Identification, Alteration Type Disentanglement &amp; CRR Delineation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/task1.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Downstream-Analysis:-CRG-Identification,-Alteration-Type-Disentanglement-&amp;-CRR-Delineation">
+<h1>Downstream Analysis: CRG Identification, Alteration Type Disentanglement &amp; CRR Delineation<a class="headerlink" href="#Downstream-Analysis:-CRG-Identification,-Alteration-Type-Disentanglement-&-CRR-Delineation" title="Link to this heading"></a></h1>
+<p>This notebook performs three downstream analyses after SILPAG model training:</p>
+<ol class="arabic simple">
+<li><p><strong>Task 1: CRG Identification</strong> — Identify condition-responsive genes.</p></li>
+<li><p><strong>Task 2: Alteration Type Disentanglement</strong> — Determine the nature of each CRG’s alteration.</p></li>
+<li><p><strong>Task 3: CRR Delineation</strong> — Delineate condition-responsive tissue regions.</p></li>
+</ol>
+<p><strong>Prerequisites:</strong> A trained SILPAG model saved from <code class="docutils literal notranslate"><span class="pre">Getting</span> <span class="pre">Started</span> <span class="pre">with</span> <span class="pre">SILPAG</span></code>.</p>
+<section id="0.-Setup">
+<h2>0. Setup<a class="headerlink" href="#0.-Setup" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">scanpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sc</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">anndata</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ad</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">sparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">SILPAG</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Matplotlib is building the font cache; this may take a moment.
+</pre></div></div>
+</div>
+</section>
+<section id="1.-Load-Data-&amp;-Preprocessing">
+<h2>1. Load Data &amp; Preprocessing<a class="headerlink" href="#1.-Load-Data-&-Preprocessing" title="Link to this heading"></a></h2>
+<p>Same preprocessing as <code class="docutils literal notranslate"><span class="pre">demo_test.ipynb</span></code> — load reference (normal breast) and target (breast cancer), intersect genes, filter.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ref</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s1">&#39;SILPAG/data/V02_nb.h5ad&#39;</span><span class="p">)</span>
+<span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s1">&#39;SILPAG/data/H1_nb.h5ad&#39;</span><span class="p">)</span>
+<span class="n">ref</span><span class="o">.</span><span class="n">var_names_make_unique</span><span class="p">()</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">var_names_make_unique</span><span class="p">()</span>
+<span class="n">sp</span><span class="o">.</span><span class="n">prefilter_specialgenes</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span>
+<span class="n">sp</span><span class="o">.</span><span class="n">prefilter_specialgenes</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+
+<span class="n">gene</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">))</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[:,</span> <span class="n">gene</span><span class="p">]</span>
+<span class="n">adata</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[:,</span> <span class="n">gene</span><span class="p">]</span>
+
+<span class="n">g1</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">filter_genes</span><span class="p">(</span><span class="n">ref</span><span class="p">,</span> <span class="n">min_cells</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.02</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">g2</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">pp</span><span class="o">.</span><span class="n">filter_genes</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">min_cells</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.02</span><span class="p">),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[:,</span> <span class="n">g1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="n">g2</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+<span class="n">adata</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[:,</span> <span class="n">g1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">|</span> <span class="n">g2</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">))</span>
+<span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span><span class="p">[:,</span> <span class="n">key</span><span class="p">]</span>
+<span class="n">adata</span> <span class="o">=</span> <span class="n">adata</span><span class="p">[:,</span> <span class="n">key</span><span class="p">]</span>
+<span class="n">ref</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;hkgene&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;hkgene&#39;</span><span class="p">]</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">labels</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;hkgene&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">del</span> <span class="n">ref</span><span class="o">.</span><span class="n">raw</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Reference: </span><span class="si">{</span><span class="n">ref</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">, Target: </span><span class="si">{</span><span class="n">adata</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Reference: (1896, 7874), Target: (613, 7874)
+</pre></div></div>
+</div>
+</section>
+<section id="2.-Load-Trained-Model-&amp;-Generate-View-Transferred-SGMs">
+<h2>2. Load Trained Model &amp; Generate View-Transferred SGMs<a class="headerlink" href="#2.-Load-Trained-Model-&-Generate-View-Transferred-SGMs" title="Link to this heading"></a></h2>
+<p>Load the saved model, compute the codebook transport plan, and generate:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">result1</span></code>: view-transferred SGM (reference <span class="math notranslate nohighlight">\(\rightarrow\)</span> target via OT)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">result2</span></code>: target self-reconstruction</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load saved config first so that patch_size, K, img_size etc. are restored</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">Config</span><span class="o">.</span><span class="n">load_config</span><span class="p">(</span><span class="s1">&#39;SILPAG/saved_model/hBC_demo&#39;</span><span class="p">)</span>
+<span class="n">args</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s1">&#39;cuda:7&#39;</span>
+<span class="n">args</span><span class="o">.</span><span class="n">train</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="c1"># Clear size lists — GeneDataset will re-populate them from the actual data</span>
+<span class="n">args</span><span class="o">.</span><span class="n">orig_img_size</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">args</span><span class="o">.</span><span class="n">resized_img_size</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">args</span><span class="o">.</span><span class="n">img_size</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="n">gene_images</span> <span class="o">=</span> <span class="p">[</span><span class="n">ref</span><span class="o">.</span><span class="n">varm</span><span class="p">[</span><span class="s1">&#39;gene_img&#39;</span><span class="p">],</span> <span class="n">adata</span><span class="o">.</span><span class="n">varm</span><span class="p">[</span><span class="s1">&#39;gene_img&#39;</span><span class="p">]]</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">GeneDataset</span><span class="p">(</span><span class="n">gene_images</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">args</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">torch.utils.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">drop_last</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">PI</span><span class="p">,</span> <span class="n">Q</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">train_marker</span><span class="p">(</span><span class="n">train_loader</span><span class="p">,</span> <span class="n">hist_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Model loaded. Codebook sizes: </span><span class="si">{</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">get_codebook</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nb">range</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">num_slice</span><span class="p">)]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Shape of each View:  [(66, 96), (30, 30)]
+Model loaded. Codebook sizes: [51, 203]
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute gene codes via OT transport plan</span>
+<span class="n">code</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">get_code</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">hist_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pi_init</span><span class="o">=</span><span class="n">PI</span><span class="p">,</span> <span class="n">source_idx</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">target_idx</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">varm</span><span class="p">[</span><span class="s1">&#39;code_ref&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># reference -&gt; target (transported)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">varm</span><span class="p">[</span><span class="s1">&#39;code_tgt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">code</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># target native</span>
+
+<span class="c1"># Generate SGMs</span>
+<span class="n">result1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">tgt_index</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">code_id</span><span class="o">=</span><span class="s1">&#39;code_ref&#39;</span><span class="p">,</span> <span class="n">gene</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>  <span class="c1"># view-transferred</span>
+<span class="n">result2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">adata</span><span class="p">,</span> <span class="n">tgt_index</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">code_id</span><span class="o">=</span><span class="s1">&#39;code_tgt&#39;</span><span class="p">,</span> <span class="n">gene</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>  <span class="c1"># target self-recon</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Generated SGMs: </span><span class="si">{</span><span class="n">result1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">, </span><span class="si">{</span><span class="n">result2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+Generating...: 100%|██████████| 7874/7874 [00:07&lt;00:00, 999.14gene/s]
+Generating...: 100%|██████████| 7874/7874 [00:07&lt;00:00, 1018.05gene/s]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Generated SGMs: (613, 7874), (613, 7874)
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Task-1:-CRG-Identification">
+<h1>Task 1: CRG Identification<a class="headerlink" href="#Task-1:-CRG-Identification" title="Link to this heading"></a></h1>
+<p>For each gene <span class="math notranslate nohighlight">\(i\)</span>, compute the CRG score:</p>
+<div class="math notranslate nohighlight">
+\[S_i = \|\hat{\mathbf{x}}^{r \to t}_i - \mathbf{x}^t_i\|_F^2\]</div>
+<p>The anchor gene scores form an empirical null modelled as <span class="math notranslate nohighlight">\(S \sim \Gamma(k, \theta)\)</span>. Genes with <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span> are designated as CRGs.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute CRG scores</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">compute_crg_scores</span><span class="p">(</span><span class="n">result1</span><span class="p">,</span> <span class="n">adata</span><span class="p">)</span>
+
+<span class="c1"># Anchor mask from training</span>
+<span class="n">anchor_mask</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">bool</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Total genes: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">scores</span><span class="p">)</span><span class="si">}</span><span class="s1">, Anchor genes: </span><span class="si">{</span><span class="n">anchor_mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Identify CRGs</span>
+<span class="c1"># null_model=&#39;gamma&#39;: fits Gamma distribution to anchor scores</span>
+<span class="c1"># No FDR correction — use raw p-value directly</span>
+<span class="n">crg_result</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">identify_crgs</span><span class="p">(</span>
+    <span class="n">scores</span><span class="p">,</span> <span class="n">anchor_mask</span><span class="p">,</span>
+    <span class="n">p_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+    <span class="n">null_model</span><span class="o">=</span><span class="s1">&#39;gamma&#39;</span><span class="p">,</span>
+    <span class="n">correction</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">n_crg</span> <span class="o">=</span> <span class="n">crg_result</span><span class="p">[</span><span class="s1">&#39;is_crg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Identified </span><span class="si">{</span><span class="n">n_crg</span><span class="si">}</span><span class="s1"> CRGs (p &lt; 0.05, null_model=gamma, no FDR)&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Null info: </span><span class="si">{</span><span class="n">crg_result</span><span class="p">[</span><span class="s2">&quot;null_info&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Total genes: 7874, Anchor genes: 1914
+Identified 279 CRGs (p &lt; 0.05, null_model=gamma, no FDR)
+Null info: {&#39;model&#39;: &#39;gamma&#39;, &#39;k&#39;: 0.4413334665723619, &#39;loc&#39;: 0, &#39;theta&#39;: np.float32(1823.2991)}
+</pre></div></div>
+</div>
+<section id="Store-CRG-Results-in-AnnData">
+<h2>Store CRG Results in AnnData<a class="headerlink" href="#Store-CRG-Results-in-AnnData" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;crg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scores</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;crg_pval&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crg_result</span><span class="p">[</span><span class="s1">&#39;pvalues&#39;</span><span class="p">]</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;crg_fdr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crg_result</span><span class="p">[</span><span class="s1">&#39;pvalues_adj&#39;</span><span class="p">]</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[</span><span class="s1">&#39;is_crg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crg_result</span><span class="p">[</span><span class="s1">&#39;is_crg&#39;</span><span class="p">]</span>
+
+<span class="n">crg_genes</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">[</span><span class="n">crg_result</span><span class="p">[</span><span class="s1">&#39;is_crg&#39;</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Top 20 CRGs by score:&#39;</span><span class="p">)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">crg_genes</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;crg_score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)[[</span><span class="s1">&#39;crg_score&#39;</span><span class="p">,</span> <span class="s1">&#39;crg_fdr&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Top 20 CRGs by score:
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>crg_score</th>
+      <th>crg_fdr</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>IGLC3</th>
+      <td>112497.500000</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>IGHA1</th>
+      <td>111526.664062</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>IGHG3</th>
+      <td>107255.210938</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>RACK1</th>
+      <td>104407.476562</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>S100A9</th>
+      <td>99992.890625</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>IGHG4</th>
+      <td>95009.445312</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>IGKC</th>
+      <td>94801.414062</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>IGLC2</th>
+      <td>82554.914062</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>TMSB10</th>
+      <td>71694.773438</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>UBA52</th>
+      <td>61477.976562</td>
+      <td>1.110223e-16</td>
+    </tr>
+    <tr>
+      <th>IGHG1</th>
+      <td>59411.761719</td>
+      <td>4.440892e-16</td>
+    </tr>
+    <tr>
+      <th>SSR4</th>
+      <td>58702.164062</td>
+      <td>7.771561e-16</td>
+    </tr>
+    <tr>
+      <th>GAPDH</th>
+      <td>56386.535156</td>
+      <td>2.664535e-15</td>
+    </tr>
+    <tr>
+      <th>ERBB2</th>
+      <td>49524.917969</td>
+      <td>1.234568e-13</td>
+    </tr>
+    <tr>
+      <th>KRT19</th>
+      <td>42674.109375</td>
+      <td>5.727863e-12</td>
+    </tr>
+    <tr>
+      <th>FTH1</th>
+      <td>34263.519531</td>
+      <td>6.490836e-10</td>
+    </tr>
+    <tr>
+      <th>CST3</th>
+      <td>31921.634766</td>
+      <td>2.434778e-09</td>
+    </tr>
+    <tr>
+      <th>PFN1</th>
+      <td>29678.187500</td>
+      <td>8.661510e-09</td>
+    </tr>
+    <tr>
+      <th>ACTB</th>
+      <td>27324.621094</td>
+      <td>3.289481e-08</td>
+    </tr>
+    <tr>
+      <th>FAU</th>
+      <td>27086.476562</td>
+      <td>3.765760e-08</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+</section>
+<section id="Task-2:-Alteration-Type-Disentanglement">
+<h1>Task 2: Alteration Type Disentanglement<a class="headerlink" href="#Task-2:-Alteration-Type-Disentanglement" title="Link to this heading"></a></h1>
+<p>For each CRG, three statistical tests determine the nature of the alteration:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Test</p></th>
+<th class="head"><p>What it detects</p></th>
+<th class="head"><p>Method</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Differential Abundance</p></td>
+<td><p>Shift in expression magnitude</p></td>
+<td><p>Wilcoxon rank-sum</p></td>
+</tr>
+<tr class="row-odd"><td><p>Differential Prevalence</p></td>
+<td><p>Change in fraction of expressing spots</p></td>
+<td><p>Fisher’s exact (binarised at <span class="math notranslate nohighlight">\(\epsilon\)</span>)</p></td>
+</tr>
+<tr class="row-even"><td><p>Differential Spatial Pattern</p></td>
+<td><p>Structured spatial discrepancy</p></td>
+<td><p>Moran’s I permutation on SDM</p></td>
+</tr>
+</tbody>
+</table>
+<p>A gene can be assigned to multiple alteration types.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_alt</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">disentangle_alteration_types</span><span class="p">(</span>
+    <span class="n">result_ref</span><span class="o">=</span><span class="n">result1</span><span class="p">,</span>
+    <span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>
+    <span class="n">crg_mask</span><span class="o">=</span><span class="n">crg_result</span><span class="p">[</span><span class="s1">&#39;is_crg&#39;</span><span class="p">],</span>
+    <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>              <span class="c1"># binarisation threshold for prevalence</span>
+    <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span>
+    <span class="n">fdr_threshold</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span>
+    <span class="n">abundance_effect_size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+    <span class="n">spatial_I_threshold</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>   <span class="c1"># require Moran&#39;s I &gt;= 0.1 for spatial</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Disentanglement results for </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">df_alt</span><span class="p">)</span><span class="si">}</span><span class="s1"> CRGs:&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_alt</span><span class="p">[[</span><span class="s1">&#39;is_diff_abundance&#39;</span><span class="p">,</span> <span class="s1">&#39;is_diff_prevalence&#39;</span><span class="p">,</span> <span class="s1">&#39;is_diff_spatial&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Disentanglement results for 279 CRGs:
+is_diff_abundance     128
+is_diff_prevalence    178
+is_diff_spatial         0
+dtype: int64
+</pre></div></div>
+</div>
+<section id="Detailed-Results-Table">
+<h2>Detailed Results Table<a class="headerlink" href="#Detailed-Results-Table" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Merge CRG scores into the disentanglement table</span>
+<span class="n">df_alt</span><span class="p">[</span><span class="s1">&#39;crg_score&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_alt</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;crg_score&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">df_alt</span><span class="p">[</span><span class="s1">&#39;crg_fdr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_alt</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;crg_fdr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="n">df_display</span> <span class="o">=</span> <span class="n">df_alt</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;crg_score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">df_display</span><span class="p">[[</span><span class="s1">&#39;crg_score&#39;</span><span class="p">,</span> <span class="s1">&#39;crg_fdr&#39;</span><span class="p">,</span> <span class="s1">&#39;abundance_fdr&#39;</span><span class="p">,</span> <span class="s1">&#39;prevalence_fdr&#39;</span><span class="p">,</span> <span class="s1">&#39;spatial_fdr&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>crg_score</th>
+      <th>crg_fdr</th>
+      <th>abundance_fdr</th>
+      <th>prevalence_fdr</th>
+      <th>spatial_fdr</th>
+    </tr>
+    <tr>
+      <th>gene</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>IGLC3</th>
+      <td>112497.500000</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>IGHA1</th>
+      <td>111526.664062</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>IGHG3</th>
+      <td>107255.210938</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>RACK1</th>
+      <td>104407.476562</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>S100A9</th>
+      <td>99992.890625</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>IGHG4</th>
+      <td>95009.445312</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>IGKC</th>
+      <td>94801.414062</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>IGLC2</th>
+      <td>82554.914062</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>TMSB10</th>
+      <td>71694.773438</td>
+      <td>0.000000e+00</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>UBA52</th>
+      <td>61477.976562</td>
+      <td>1.110223e-16</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>IGHG1</th>
+      <td>59411.761719</td>
+      <td>4.440892e-16</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>SSR4</th>
+      <td>58702.164062</td>
+      <td>7.771561e-16</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>GAPDH</th>
+      <td>56386.535156</td>
+      <td>2.664535e-15</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>ERBB2</th>
+      <td>49524.917969</td>
+      <td>1.234568e-13</td>
+      <td>1.594099e-291</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>KRT19</th>
+      <td>42674.109375</td>
+      <td>5.727863e-12</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>FTH1</th>
+      <td>34263.519531</td>
+      <td>6.490836e-10</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>CST3</th>
+      <td>31921.634766</td>
+      <td>2.434778e-09</td>
+      <td>1.927473e-281</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>PFN1</th>
+      <td>29678.187500</td>
+      <td>8.661510e-09</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>ACTB</th>
+      <td>27324.621094</td>
+      <td>3.289481e-08</td>
+      <td>6.726679e-276</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>FAU</th>
+      <td>27086.476562</td>
+      <td>3.765760e-08</td>
+      <td>8.043644e-312</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>EEF2</th>
+      <td>24792.904297</td>
+      <td>1.387828e-07</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>CYBA</th>
+      <td>21333.750000</td>
+      <td>1.000695e-06</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>ATP6V0B</th>
+      <td>21237.146484</td>
+      <td>1.057632e-06</td>
+      <td>1.542459e-266</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>MYL6</th>
+      <td>20754.218750</td>
+      <td>1.394898e-06</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>CFL1</th>
+      <td>20331.494141</td>
+      <td>1.777699e-06</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>EDF1</th>
+      <td>20115.812500</td>
+      <td>2.011995e-06</td>
+      <td>0.000000e+00</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>CD74</th>
+      <td>19010.207031</td>
+      <td>3.798737e-06</td>
+      <td>2.858191e-284</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>CTSD</th>
+      <td>18716.736328</td>
+      <td>4.497993e-06</td>
+      <td>1.381200e-318</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>HLA-B</th>
+      <td>16847.978516</td>
+      <td>1.322963e-05</td>
+      <td>7.514544e-268</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+    <tr>
+      <th>MGP</th>
+      <td>16809.214844</td>
+      <td>1.352980e-05</td>
+      <td>3.593633e-269</td>
+      <td>1.0</td>
+      <td>0.279</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+</section>
+<section id="Example-CRG-Visualisation">
+<h2>Example CRG Visualisation<a class="headerlink" href="#Example-CRG-Visualisation" title="Link to this heading"></a></h2>
+<p>Visualise the reference expression, view-transferred SGM, target self-reconstruction, and SDM.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualise</span>
+<span class="n">top_gene</span> <span class="o">=</span> <span class="s1">&#39;S100A8&#39;</span>
+<span class="n">gene_idx</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">var_names</span><span class="p">)</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">top_gene</span><span class="p">)</span>
+
+<span class="n">X_ref_sgm</span> <span class="o">=</span> <span class="n">result1</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span> <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">result1</span><span class="o">.</span><span class="n">X</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">result1</span><span class="o">.</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Reference slice: original expression on reference coordinates</span>
+<span class="n">ref_expr</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()[:,</span> <span class="n">gene_idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">X</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">ref</span><span class="o">.</span><span class="n">X</span><span class="p">)[:,</span> <span class="n">gene_idx</span><span class="p">]</span>
+<span class="n">ref_coords</span> <span class="o">=</span> <span class="n">ref</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;spatial&#39;</span><span class="p">]</span>
+
+<span class="c1"># Target slice</span>
+<span class="n">tgt_coords</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">obsm</span><span class="p">[</span><span class="s1">&#39;spatial&#39;</span><span class="p">]</span>
+<span class="n">expr_vt</span> <span class="o">=</span> <span class="n">X_ref_sgm</span><span class="p">[:,</span> <span class="n">gene_idx</span><span class="p">]</span>      <span class="c1"># view-transferred</span>
+
+<span class="c1"># Original target expression</span>
+<span class="n">tgt_raw</span> <span class="o">=</span> <span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()[:,</span> <span class="n">gene_idx</span><span class="p">]</span> <span class="k">if</span> <span class="n">sparse</span><span class="o">.</span><span class="n">issparse</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">)</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">adata</span><span class="o">.</span><span class="n">X</span><span class="p">)[:,</span> <span class="n">gene_idx</span><span class="p">]</span>
+
+<span class="c1"># Normalize (library-size) + log1p before visualisation</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_norm_log</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">total</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">/</span> <span class="n">total</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">([</span><span class="n">ref_expr</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">expr_vt</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="n">tgt_raw</span><span class="o">.</span><span class="n">sum</span><span class="p">()])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log1p</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">ref_expr</span> <span class="o">=</span> <span class="n">_norm_log</span><span class="p">(</span><span class="n">ref_expr</span><span class="p">)</span>
+<span class="n">expr_vt</span>  <span class="o">=</span> <span class="n">_norm_log</span><span class="p">(</span><span class="n">expr_vt</span><span class="p">)</span>
+<span class="n">tgt_raw</span>  <span class="o">=</span> <span class="n">_norm_log</span><span class="p">(</span><span class="n">tgt_raw</span><span class="p">)</span>
+
+<span class="n">sdm</span> <span class="o">=</span> <span class="n">tgt_raw</span> <span class="o">-</span> <span class="n">expr_vt</span>               <span class="c1"># SDM: original target - view-transferred</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">22</span><span class="p">,</span> <span class="mf">4.5</span><span class="p">))</span>
+
+<span class="c1"># Unified color scale for expression panels</span>
+<span class="n">vmin_expr</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">vmax_expr</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ref_expr</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">expr_vt</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">tgt_raw</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+<span class="c1"># Panel 0: Reference expression (on reference coordinates)</span>
+<span class="n">sc0</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ref_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">ref_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">ref_expr</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_expr</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_expr</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">top_gene</span><span class="si">}</span><span class="s1"> — Reference Expression&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc0</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># Panel 1: View-transferred SGM (on target coordinates)</span>
+<span class="n">sc1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tgt_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tgt_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">expr_vt</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_expr</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_expr</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">top_gene</span><span class="si">}</span><span class="s1"> — View-transferred (Ref→Tgt)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc1</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># Panel 2: Original target expression (on target coordinates)</span>
+<span class="n">sc2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tgt_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tgt_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">tgt_raw</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Reds&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin_expr</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vmax_expr</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">top_gene</span><span class="si">}</span><span class="s1"> — Original Target Expression&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc2</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># Panel 3: SDM (symmetric scale)</span>
+<span class="n">vlim</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">sdm</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sdm</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+<span class="n">sc3</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">tgt_coords</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">tgt_coords</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">sdm</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdBu_r&#39;</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=-</span><span class="n">vlim</span><span class="p">,</span> <span class="n">vmax</span><span class="o">=</span><span class="n">vlim</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">top_gene</span><span class="si">}</span><span class="s1"> — SDM ($x^t - </span><span class="se">\\</span><span class="s1">hat</span><span class="se">{{</span><span class="s1">x</span><span class="se">}}</span><span class="s1">^</span><span class="se">{{</span><span class="s1">r→t</span><span class="se">}}</span><span class="s1">$)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">sc3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">shrink</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">:</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+<span class="k">if</span> <span class="n">top_gene</span> <span class="ow">in</span> <span class="n">df_alt</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+    <span class="n">alt_type</span> <span class="o">=</span> <span class="n">df_alt</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">top_gene</span><span class="p">,</span> <span class="s1">&#39;alteration_type&#39;</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">alt_type</span> <span class="o">=</span> <span class="s1">&#39;N/A&#39;</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Gene: </span><span class="si">{</span><span class="n">top_gene</span><span class="si">}</span><span class="s1"> | CRG Score: </span><span class="si">{</span><span class="n">scores</span><span class="p">[</span><span class="n">gene_idx</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> | Alteration: </span><span class="si">{</span><span class="n">alt_type</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family [&#39;Arial&#39;] not found. Falling back to DejaVu Sans.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/task1_17_1.png" src="_images/task1_17_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Task-3:-CRR-Delineation">
+<h1>Task 3: CRR Delineation<a class="headerlink" href="#Task-3:-CRR-Delineation" title="Link to this heading"></a></h1>
+<p>Delineate condition-responsive tissue regions (CRR) using two approaches:</p>
+<ul class="simple">
+<li><p><strong>Marker-based</strong>: For a known condition-associated gene <span class="math notranslate nohighlight">\(g\)</span>, compute the SDM <span class="math notranslate nohighlight">\(D_g = |\hat{\mathbf{x}}^{r \to t}_g - \mathbf{x}^t_g|\)</span>, smooth with a Gaussian kernel (<span class="math notranslate nohighlight">\(\sigma=1\)</span>), then apply Otsu’s method to find the optimal threshold <span class="math notranslate nohighlight">\(\tau^*\)</span> that maximises between-group variance.</p></li>
+<li><p><strong>Marker-free</strong>: When no markers are available, use all CRGs. Each spot <span class="math notranslate nohighlight">\(i\)</span> gets a discrepancy vector <span class="math notranslate nohighlight">\(\mathbf{f}_i \in \mathbb{R}^{|I_{CRG}|}\)</span>. Leiden clustering on <span class="math notranslate nohighlight">\(\{\mathbf{f}_i\}\)</span> yields two spatial domains; the CRR is the one with higher aggregate discrepancy.</p></li>
+</ul>
+<section id="Marker-based-CRR-Delineation">
+<h2>Marker-based CRR Delineation<a class="headerlink" href="#Marker-based-CRR-Delineation" title="Link to this heading"></a></h2>
+<p>Use ERBB2 as the marker gene to delineate the CRR.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Marker-based delineation with ERBB2</span>
+<span class="n">marker_gene</span> <span class="o">=</span> <span class="s1">&#39;ERBB2&#39;</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Marker gene for CRR delineation: </span><span class="si">{</span><span class="n">marker_gene</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">crr_marker</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">delineate_crr_marker</span><span class="p">(</span>
+    <span class="n">result_ref</span><span class="o">=</span><span class="n">result1</span><span class="p">,</span>
+    <span class="n">adata</span><span class="o">=</span><span class="n">adata</span><span class="p">,</span>
+    <span class="n">gene</span><span class="o">=</span><span class="n">marker_gene</span><span class="p">,</span>
+    <span class="n">sigma</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">n_crr</span> <span class="o">=</span> <span class="n">crr_marker</span><span class="p">[</span><span class="s1">&#39;crr_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;CRR spots: </span><span class="si">{</span><span class="n">n_crr</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">crr_marker</span><span class="p">[</span><span class="s2">&quot;crr_mask&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1"> &#39;</span>
+      <span class="sa">f</span><span class="s1">&#39;(Otsu threshold: </span><span class="si">{</span><span class="n">crr_marker</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+<span class="c1"># Visualise</span>
+<span class="n">sp</span><span class="o">.</span><span class="n">plot_crr</span><span class="p">(</span>
+    <span class="n">coords</span><span class="o">=</span><span class="n">crr_marker</span><span class="p">[</span><span class="s1">&#39;coords&#39;</span><span class="p">],</span>
+    <span class="n">crr_mask</span><span class="o">=</span><span class="n">crr_marker</span><span class="p">[</span><span class="s1">&#39;crr_mask&#39;</span><span class="p">],</span>
+    <span class="n">sdm_smoothed</span><span class="o">=</span><span class="n">crr_marker</span><span class="p">[</span><span class="s1">&#39;sdm_smoothed&#39;</span><span class="p">],</span>
+    <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Marker-based CRR (</span><span class="si">{</span><span class="n">marker_gene</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+findfont: Font family &#39;Arial&#39; not found.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Marker gene for CRR delineation: ERBB2
+CRR spots: 100/613 (Otsu threshold: 1.86)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="_images/task1_20_2.png" src="_images/task1_20_2.png" />
+</div>
+</div>
+</section>
+<section id="Store-CRR-Results">
+<h2>Store CRR Results<a class="headerlink" href="#Store-CRR-Results" title="Link to this heading"></a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Store CRR annotations in adata.obs</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;crr_marker&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crr_marker</span><span class="p">[</span><span class="s1">&#39;crr_mask&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s1">&#39;crr_marker_sdm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">crr_marker</span><span class="p">[</span><span class="s1">&#39;sdm_smoothed&#39;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Marker-based CRR: </span><span class="si">{</span><span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[</span><span class="s2">&quot;crr_marker&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s1"> spots&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Marker-based CRR: 100 spots
+Marker-free CRR:  77 spots
+</pre></div></div>
+</div>
+</section>
+</section>
+<section id="Save-All-Results">
+<h1>Save All Results<a class="headerlink" href="#Save-All-Results" title="Link to this heading"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save disentanglement table</span>
+<span class="n">df_alt</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;crg_disentanglement_results.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save full gene-level results</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">var</span><span class="p">[[</span><span class="s1">&#39;crg_score&#39;</span><span class="p">,</span> <span class="s1">&#39;crg_pval&#39;</span><span class="p">,</span> <span class="s1">&#39;crg_fdr&#39;</span><span class="p">,</span> <span class="s1">&#39;is_crg&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;crg_identification_results.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Save GO enrichment results</span>
+<span class="c1"># df_pathway.to_csv(&#39;crg_pathway_enrichment_results.csv&#39;, index=False)</span>
+
+<span class="c1"># Save CRR results</span>
+<span class="n">adata</span><span class="o">.</span><span class="n">obs</span><span class="p">[[</span><span class="s1">&#39;crr_marker&#39;</span><span class="p">,</span> <span class="s1">&#39;crr_marker_sdm&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;crr_delineation_results.csv&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;All results saved.&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">KeyError</span>                                  Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[32], line 11</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> adata<span style="color: rgb(98,98,98)">.</span>var[[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">crg_score</span><span style="color: rgb(175,0,0)">&#39;</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">crg_pval</span><span style="color: rgb(175,0,0)">&#39;</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">crg_fdr</span><span style="color: rgb(175,0,0)">&#39;</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">is_crg</span><span style="color: rgb(175,0,0)">&#39;</span>]]<span style="color: rgb(98,98,98)">.</span>to_csv(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">crg_identification_results.csv</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-green-intense-fg ansi-bold">      7</span> <span style="color: rgb(95,135,135)"># Save GO enrichment results</span>
+<span class="ansi-green-intense-fg ansi-bold">      8</span> <span style="color: rgb(95,135,135)"># df_pathway.to_csv(&#39;crg_pathway_enrichment_results.csv&#39;, index=False)</span>
+<span class="ansi-green-intense-fg ansi-bold">      9</span>
+<span class="ansi-green-intense-fg ansi-bold">     10</span> <span style="color: rgb(95,135,135)"># Save CRR results</span>
+<span class="ansi-green-fg">---&gt; 11</span> <span class="ansi-yellow-bg">adata</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">obs</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">crr_marker</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">crr_marker_sdm</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">]</span><span style="color: rgb(98,98,98)">.</span>to_csv(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">crr_delineation_results.csv</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-green-intense-fg ansi-bold">     13</span> <span style="color: rgb(0,135,0)">print</span>(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">All results saved.</span><span style="color: rgb(175,0,0)">&#39;</span>)
+
+File <span class="ansi-green-fg">/data/liwl/.conda/lib/python3.9/site-packages/pandas/core/frame.py:4119</span>, in <span class="ansi-cyan-fg">DataFrame.__getitem__</span><span class="ansi-blue-fg">(self, key)</span>
+<span class="ansi-green-intense-fg ansi-bold">   4117</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> is_iterator(key):
+<span class="ansi-green-intense-fg ansi-bold">   4118</span>         key <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">list</span>(key)
+<span class="ansi-green-fg">-&gt; 4119</span>     indexer <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">columns</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_get_indexer_strict</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">key</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">columns</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#34;</span><span class="ansi-yellow-bg">)</span>[<span style="color: rgb(98,98,98)">1</span>]
+<span class="ansi-green-intense-fg ansi-bold">   4121</span> <span style="color: rgb(95,135,135)"># take() does not accept boolean indexers</span>
+<span class="ansi-green-intense-fg ansi-bold">   4122</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">getattr</span>(indexer, <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">dtype</span><span style="color: rgb(175,0,0)">&#34;</span>, <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>) <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(0,135,0)">bool</span>:
+
+File <span class="ansi-green-fg">/data/liwl/.conda/lib/python3.9/site-packages/pandas/core/indexes/base.py:6212</span>, in <span class="ansi-cyan-fg">Index._get_indexer_strict</span><span class="ansi-blue-fg">(self, key, axis_name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   6209</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-green-intense-fg ansi-bold">   6210</span>     keyarr, indexer, new_indexer <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_reindex_non_unique(keyarr)
+<span class="ansi-green-fg">-&gt; 6212</span> <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_raise_if_missing</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">keyarr</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">indexer</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">axis_name</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">   6214</span> keyarr <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>take(indexer)
+<span class="ansi-green-intense-fg ansi-bold">   6215</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">isinstance</span>(key, Index):
+<span class="ansi-green-intense-fg ansi-bold">   6216</span>     <span style="color: rgb(95,135,135)"># GH 42790 - Preserve name from an Index</span>
+
+File <span class="ansi-green-fg">/data/liwl/.conda/lib/python3.9/site-packages/pandas/core/indexes/base.py:6261</span>, in <span class="ansi-cyan-fg">Index._raise_if_missing</span><span class="ansi-blue-fg">(self, key, indexer, axis_name)</span>
+<span class="ansi-green-intense-fg ansi-bold">   6259</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> nmissing:
+<span class="ansi-green-intense-fg ansi-bold">   6260</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> nmissing <span style="color: rgb(98,98,98)">==</span> <span style="color: rgb(0,135,0)">len</span>(indexer):
+<span class="ansi-green-fg">-&gt; 6261</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">None of [</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>key<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">] are in the [</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>axis_name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">]</span><span style="color: rgb(175,0,0)">&#34;</span>)
+<span class="ansi-green-intense-fg ansi-bold">   6263</span>     not_found <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(0,135,0)">list</span>(ensure_index(key)[missing_mask<span style="color: rgb(98,98,98)">.</span>nonzero()[<span style="color: rgb(98,98,98)">0</span>]]<span style="color: rgb(98,98,98)">.</span>unique())
+<span class="ansi-green-intense-fg ansi-bold">   6264</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">KeyError</span>(<span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>not_found<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)"> not in index</span><span style="color: rgb(175,0,0)">&#34;</span>)
+
+<span class="ansi-red-fg">KeyError</span>: &#34;None of [Index([&#39;crr_marker&#39;, &#39;crr_marker_sdm&#39;], dtype=&#39;object&#39;)] are in the [columns]&#34;
+</pre></div></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="demo_test.html" class="btn btn-neutral float-left" title="Getting Started with SILPAG" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, Wenlin LI.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
